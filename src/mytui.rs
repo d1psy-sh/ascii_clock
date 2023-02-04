@@ -8,8 +8,10 @@ use crossterm::{
 };
 use std::{io, time::Duration};
 use tui::{backend::CrosstermBackend, Terminal};
+use crate::args;
 
 pub fn run() -> Result<(), io::Error> {
+    let a = args::parse_args();
     let stdout = io::stdout();
     enable_raw_mode()?;
     let backend = CrosstermBackend::new(stdout);
@@ -20,7 +22,7 @@ pub fn run() -> Result<(), io::Error> {
 
     loop {
         terminal.draw(|f| {
-            ui::ui(f);
+            ui::ui(f, &a);
         })?;
         // handle events, exit on q, poll for events
         let event = event::poll(Duration::from_millis(100))?;
