@@ -1,32 +1,32 @@
 use std::{fmt::Error, time};
 
-fn clock() -> String {
+pub fn clock() -> String {
     let now = time::SystemTime::now();
     let since_the_epoch = now
         .duration_since(time::UNIX_EPOCH)
         .expect("Time went backwards");
     let in_seconds = since_the_epoch.as_secs();
-    let in_hours = in_seconds / 3600;
+    let in_hours = (in_seconds % 86400) / 3600;
     let in_minutes = (in_seconds % 3600) / 60;
     let in_seconds = in_seconds % 60;
     format!("{:02}:{:02}:{:02}", in_hours, in_minutes, in_seconds)
 }
 
 /// give the time left as a formated string
-fn countdown(time: usize) -> String {
+pub fn countdown(time: usize) -> String {
     let hours = time / 3600;
     let minutes = (time % 3600) / 60;
     let seconds = time % 60;
     return format!("{:02}:{:02}:{:02}", hours, minutes, seconds);
 }
 
-fn parse_time(time: String) -> Result<usize, Error> {
+pub fn parse_time(time: &String) -> Result<usize, Error> {
     // parse the time allow two formats one format is "1d 2h 4m 10s" and one format is "1000"
     // which is interpreted as seconds
     match time.parse::<usize>() {
         Ok(time) => Ok(time),
         Err(_) => {
-            let mut time = time;
+            let mut time = time.clone();
             let mut seconds = 0;
             let mut minutes = 0;
             let mut hours = 0;
