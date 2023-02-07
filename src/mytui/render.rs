@@ -1,5 +1,5 @@
 // these are the numbers that will be rendered to the screen
-const CHAR_HEIGHT : usize = 6;
+const CHAR_HEIGHT: usize = 6;
 
 /// match the ascii chars in the given string to the big ascii art chars here
 /// return a Text struct for the tui lib
@@ -90,6 +90,15 @@ fn push_letter(current: Vec<String>, letter: char) -> Vec<String> {
         res.push(format!("{}{}", line, tmp[idx]));
     }
     res
+}
+
+pub fn set_margin(text: Vec<String>, horizontal: usize, vertical: usize) -> Vec<String> {
+    let mut hmargined: Vec<String> = text.into_iter()
+        .map(|x| format!("{}{}", " ".repeat(horizontal), x))
+        .collect();
+    let mut top_margin = vec!["\n".to_string(); vertical];
+    top_margin.append(&mut hmargined);
+    top_margin
 }
 
 const ONE: &str = r#" ██╗
