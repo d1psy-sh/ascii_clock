@@ -70,7 +70,7 @@ fn clock(
             ui::ui(f, &a, &time);
         })?;
         // handle events, exit on q, poll for events
-        let event = event::poll(Duration::from_millis(100))?;
+        let event = event::poll(Duration::from_millis(10))?;
         // check if an event was received
         if event {
             // read the event
@@ -109,7 +109,7 @@ fn countdown(
             break;
         }
         // handle events, exit on q, poll for events
-        let event = event::poll(Duration::from_millis(100))?;
+        let event = event::poll(Duration::from_millis(10))?;
         // check if an event was received
         if event {
             // read the event
